@@ -10,8 +10,8 @@ using Vehicles04.API.Data;
 namespace Vehicles04.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211106155633_CompleteDb")]
-    partial class CompleteDb
+    [Migration("20211106181835_FinalDb")]
+    partial class FinalDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -439,7 +439,7 @@ namespace Vehicles04.API.Migrations
                     b.ToTable("VehiclePhotos");
                 });
 
-            modelBuilder.Entity("Vehicles04.API.Data.Entities.VehicleType", b =>
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.VehicleTypes", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -565,7 +565,7 @@ namespace Vehicles04.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Vehicles04.API.Data.Entities.VehicleType", "VehicleType")
+                    b.HasOne("Vehicles04.API.Data.Entities.VehicleTypes", "VehicleType")
                         .WithMany("Vehicles")
                         .HasForeignKey("VehicleTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -621,7 +621,7 @@ namespace Vehicles04.API.Migrations
                     b.Navigation("VehiclePhotos");
                 });
 
-            modelBuilder.Entity("Vehicles04.API.Data.Entities.VehicleType", b =>
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.VehicleTypes", b =>
                 {
                     b.Navigation("Vehicles");
                 });

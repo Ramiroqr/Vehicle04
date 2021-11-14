@@ -2,7 +2,7 @@
 
 namespace Vehicles04.API.Migrations
 {
-    public partial class UserTables : Migration
+    public partial class FinalDb1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Vehicles04.API.Data.Entities
 {
-    public class VehicleType
+    public class VehicleTypes
     {
         public int Id { get; set; }
 

@@ -10,8 +10,8 @@ using Vehicles04.API.Data;
 namespace Vehicles04.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211027232345_User-Tables")]
-    partial class UserTables
+    [Migration("20211107004832_FinalDb1")]
+    partial class FinalDb1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -172,6 +172,37 @@ namespace Vehicles04.API.Migrations
                     b.ToTable("Brands");
                 });
 
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.Detail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("LaborPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProcedureId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("SparePartsPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("ProcedureId");
+
+                    b.ToTable("Details");
+                });
+
             modelBuilder.Entity("Vehicles04.API.Data.Entities.DocumetType", b =>
                 {
                     b.Property<int>("Id")
@@ -190,6 +221,32 @@ namespace Vehicles04.API.Migrations
                         .IsUnique();
 
                     b.ToTable("DocumetTypes");
+                });
+
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.History", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Mileage")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("Histories");
                 });
 
             modelBuilder.Entity("Vehicles04.API.Data.Entities.Procedure", b =>
@@ -310,6 +367,78 @@ namespace Vehicles04.API.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.Vehicle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Line")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Model")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Plaque")
+                        .IsRequired()
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("VehicleTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
+
+                    b.HasIndex("Plaque")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("VehicleTypeId");
+
+                    b.ToTable("Vehicles");
+                });
+
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.VehiclePhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("VehiclePhotos");
+                });
+
             modelBuilder.Entity("Vehicles04.API.Data.Entities.VehicleTypes", b =>
                 {
                     b.Property<int>("Id")
@@ -381,6 +510,36 @@ namespace Vehicles04.API.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.Detail", b =>
+                {
+                    b.HasOne("Vehicles04.API.Data.Entities.History", "History")
+                        .WithMany("Details")
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vehicles04.API.Data.Entities.Procedure", "Procedure")
+                        .WithMany("Details")
+                        .HasForeignKey("ProcedureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("Procedure");
+                });
+
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.History", b =>
+                {
+                    b.HasOne("Vehicles04.API.Data.Entities.Vehicle", "Vehicle")
+                        .WithMany("Histories")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Vehicle");
+                });
+
             modelBuilder.Entity("Vehicles04.API.Data.Entities.User", b =>
                 {
                     b.HasOne("Vehicles04.API.Data.Entities.DocumetType", "DocumetType")
@@ -392,9 +551,79 @@ namespace Vehicles04.API.Migrations
                     b.Navigation("DocumetType");
                 });
 
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.Vehicle", b =>
+                {
+                    b.HasOne("Vehicles04.API.Data.Entities.Brand", "Brand")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vehicles04.API.Data.Entities.User", "User")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vehicles04.API.Data.Entities.VehicleTypes", "VehicleType")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("VehicleTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Brand");
+
+                    b.Navigation("User");
+
+                    b.Navigation("VehicleType");
+                });
+
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.VehiclePhoto", b =>
+                {
+                    b.HasOne("Vehicles04.API.Data.Entities.Vehicle", "Vehicle")
+                        .WithMany("VehiclePhotos")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.Brand", b =>
+                {
+                    b.Navigation("Vehicles");
+                });
+
             modelBuilder.Entity("Vehicles04.API.Data.Entities.DocumetType", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.History", b =>
+                {
+                    b.Navigation("Details");
+                });
+
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.Procedure", b =>
+                {
+                    b.Navigation("Details");
+                });
+
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.User", b =>
+                {
+                    b.Navigation("Vehicles");
+                });
+
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.Vehicle", b =>
+                {
+                    b.Navigation("Histories");
+
+                    b.Navigation("VehiclePhotos");
+                });
+
+            modelBuilder.Entity("Vehicles04.API.Data.Entities.VehicleTypes", b =>
+                {
+                    b.Navigation("Vehicles");
                 });
 #pragma warning restore 612, 618
         }

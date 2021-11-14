@@ -10,7 +10,6 @@ namespace Vehicles04.API.Data.Entities
 {
     public class User : IdentityUser
     {
-        public int Id { get; set; }
 
         [Display(Name = "Nombre")]
         [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres")]
@@ -38,11 +37,11 @@ namespace Vehicles04.API.Data.Entities
         [Display(Name = "Foto")]
         public Guid ImageId { get; set; }
 
-        //TODO: Fix the image path
+
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://localhost:44396/images/noimage.png"
-            : $"https://vehicleszulu.blob.core.windows.net/users/{ImageId}";
+            ? $"https://localhost:44396/images/no-image.png"
+            : $"https://vehicle01.blob.core.windows.net/users/{ImageId}";
 
         [Display(Name = "Tipo de usuario")]
         public UserType UserType { get; set; }
@@ -50,5 +49,7 @@ namespace Vehicles04.API.Data.Entities
         public string FullName => $"{FirstName} {LastName}";
         
         public ICollection<Vehicle> Vehicles { get; set; }
+
+        public int VehiclesCount => Vehicles == null ? 0 : Vehicles.Count;
     }
 }

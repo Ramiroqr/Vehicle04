@@ -12,7 +12,7 @@ namespace Vehicles04.API.Data.Entities
 
         [Display(Name = "Tipo de vehiculo")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public VehicleType VehicleType { get; set; }
+        public VehicleTypes VehicleType { get; set; }
 
         [Display(Name = "Marca")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
@@ -52,18 +52,16 @@ namespace Vehicles04.API.Data.Entities
         [Display(Name = "# Foto")]
         public int VehiclePhotosCount => VehiclePhotos == null ? 0 : VehiclePhotos.Count;
 
-        //TODO: Fix the correct path
         [Display(Name = "Foto")]
         public string ImageFullPath => VehiclePhotos == null || VehiclePhotos.Count == 0
-            ? $"https://localhost:44321/images/noimage.png"
+            ? $"https://localhost:44321/images/no-image.png"
             : VehiclePhotos.FirstOrDefault().ImageFullPath;
 
         public ICollection<History> Histories { get; set; }
 
+        [Display(Name = "# Historias")]
         public int HistoriesCount => Histories == null ? 0 : Histories.Count;
 
 
     }
-
-
 }

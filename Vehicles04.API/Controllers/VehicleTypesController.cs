@@ -34,7 +34,7 @@ namespace Vehicles04.API.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(VehicleType vehicleTypes)
+        public async Task<IActionResult> Create(VehicleTypes vehicleTypes)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace Vehicles04.API.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, VehicleType vehicleTypes)
+        public async Task<IActionResult> Edit(int id, VehicleTypes vehicleTypes)
         {
             if (id != vehicleTypes.Id)
             {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Vehicles04.API.Migrations
 {
-    public partial class CompleteDb : Migration
+    public partial class FinalDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

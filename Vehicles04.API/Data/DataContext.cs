@@ -21,7 +21,7 @@ namespace Vehicles04.API.Data
         public DbSet<VehiclePhoto> VehiclePhotos { get; set; }
         public DbSet<Procedure> Procedures { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
-        public DbSet<VehicleType> VehicleTypes { get; set; }
+        public DbSet<VehicleTypes> VehicleTypes { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,7 +30,7 @@ namespace Vehicles04.API.Data
             modelBuilder.Entity<Procedure>()
                 .HasIndex(x => x.Description).IsUnique();
 
-            modelBuilder.Entity<VehicleType>()
+            modelBuilder.Entity<VehicleTypes>()
                 .HasIndex(x => x.Description).IsUnique();
 
             modelBuilder.Entity<Brand>()
