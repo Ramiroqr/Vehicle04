@@ -27,7 +27,7 @@ namespace Vehicles04.API.Helpers
             await blockBlob.DeleteAsync();
         }
 
-        public async Task<Guid> UploadBlobAsyc(string image, string containerName)
+        public async Task<Guid> UploadBlobAsync(string image, string containerName)
         {
             Stream stream = File.OpenRead(image);
             Guid name = Guid.NewGuid();

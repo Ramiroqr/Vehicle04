@@ -11,8 +11,14 @@ namespace Vehicles04.API.Helpers
     public interface IUserHelper
     {
         Task<User> GetUserAsync(string email);
+        
+        Task<User> GetUserAsync(Guid email);
+
+        Task<IdentityResult> DeleteUserAsync(User user);
 
         Task<IdentityResult> AddUserAsync(User user, string password);
+        
+        Task<IdentityResult> UpdateUserAsync(User user);
 
         Task CheckRoleAsync(string roleName);
 
